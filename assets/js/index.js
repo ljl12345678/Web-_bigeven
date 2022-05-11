@@ -1,5 +1,6 @@
 $(function() {
     // 获取用户的基本信息
+
     getInInfo()
     let layer = layui.layer
     $('#btnLogout').on('click', function() {
@@ -15,6 +16,7 @@ $(function() {
         });
 
     })
+
 
 })
 
@@ -32,6 +34,13 @@ function getInInfo() {
             }
             renderAvatar(res.data)
         },
+        complete: function(res) {
+            if (res.responseJSON.status === 1 && res.responseJSON.message === '身份认证失败！') {
+                // console.log(res);
+                localStorage.removeItem('token')
+                location.href = '/login.html'
+            }
+        }
 
     })
 }
